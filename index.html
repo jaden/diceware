@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diceware Generator</title>
+  <link rel="stylesheet" href="assets/bulma-0.7.2.min.css">
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+
+    @media screen and (min-width: 1068px) {
+      .container {
+        max-width: 600px;
+        width: 600px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section id="app" class="section">
+
+    <div class="container">
+
+      <h1 class="title">Diceware Generator</h1>
+
+      <div class="field">
+        <label class="label is-uppercase">Number of Words</label>
+        <div class="control">
+          <input class="input" type="text" v-model="numWords" placeholder="The number of words in the passphrase">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label is-uppercase">Delimiter</label>
+        <div class="control">
+          <input class="input" type="text" v-model="delimiter" placeholder="Text to separate the words">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <button @click="generatePassphrase" class="button is-primary is-medium is-fullwidth">Generate</button>
+        </div>
+      </div>
+
+      <div class="box has-text-centered" style="overflow-x: auto" v-show="passphrase">
+        <span class="is-size-3 is-size-6-mobile" style="font-family: monospace" v-cloak>
+            {{ passphrase }}
+        </span>
+      </div>
+
+    </div>
+
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          Built by <a href="https://dan.hersam.com">Dan Hersam</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/vue-2.5.17.min.js"></script>
+  <script src="wordlist.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
