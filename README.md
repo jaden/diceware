@@ -6,7 +6,7 @@ A simple, static diceware passphrase generator that uses `window.crypto.getRando
 
 It can be run locally by opening `index.html` in your web browser. All assets are included in the repository so no network connection is required.
 
-Hosted online at https://snapmagic.com/diceware/
+Hosted online at https://diceware.danhersam.com
 
 # Usage
 
