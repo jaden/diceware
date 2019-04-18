@@ -1,6 +1,6 @@
 # Diceware Passphrase Generator
 
-![](assets/diceware-passphrase-generator.png)
+![](diceware-passphrase-generator.png)
 
 A simple, static diceware passphrase generator that uses `window.crypto.getRandomValues()` for cryptographically secure pseudo random numbers.
 
