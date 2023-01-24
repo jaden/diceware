@@ -9,7 +9,7 @@ function getRandomNumber(ceiling) {
 new Vue({
   el: '#app',
   data: {
-    numWords: 7,
+    numWords: 5,
     delimiter: ' ',
     passphrase: '',
   },
