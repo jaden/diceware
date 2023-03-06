@@ -6,6 +6,14 @@ function getRandomNumber(ceiling) {
   return Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xffffffff + 1) * ceiling);
 }
 
+function getEntropy(length, numPossibleSymbols) {
+  if (!length || !numPossibleSymbols) {
+    return null;
+  }
+
+  return Math.round(Math.log2(Math.pow(numPossibleSymbols, length)) * 100) / 100;
+}
+
 new Vue({
   el: '#app',
   data: {
@@ -27,6 +35,22 @@ new Vue({
       }
 
       this.passphrase = selectedWords.join(this.delimiter);
-    }
-  }
+    },
+  },
+
+  watch: {
+    numWords: function () {
+      this.generatePassphrase();
+    },
+
+    delimiter: function () {
+      this.generatePassphrase();
+    },
+  },
+
+  computed: {
+    entropy: function () {
+      return getEntropy(this.numWords, words.length);
+    },
+  },
 });

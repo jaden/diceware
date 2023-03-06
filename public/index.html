@@ -73,7 +73,7 @@
         </div>
 
         <p class="has-text-grey is-size-7">
-          {{ passphrase.length }} characters
+          {{ passphrase.length }} characters<span v-show="entropy && passphrase">, {{ entropy }} bits of entropy</span>
         </p>
       </div>
 
