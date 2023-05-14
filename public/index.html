@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Diceware Passphrase Generator</title>
-  <link rel="stylesheet" href="assets/css/bulma-0.7.5.min.css">
+  <link rel="stylesheet" href="assets/css/bulma-0.9.4.min.css">
   <style>
     [v-cloak] {
       display: none;
@@ -61,7 +61,7 @@
 
       <div class="field">
         <div class="control">
-          <textarea v-model="passphrase" id="generated-passphrase" class="textarea is-large has-text-centered" type="text" style="font-family: monospace" readonly></textarea>
+          <textarea v-model="passphrase" id="generated-passphrase" class="textarea is-large has-text-centered" rows="3" style="font-family: monospace" readonly></textarea>
         </div>
       </div>
 
@@ -91,10 +91,10 @@
     </div>
   </footer>
 
-  <script src="assets/js/vue-2.5.22.min.js"></script>
+  <script src="assets/js/vue-3.3.2.global.prod.js"></script>
   <script src="assets/js/clipboard-2.0.4.min.js"></script>
   <script src="wordlist.js?v=1"></script>
-  <script src="app.js?v=1"></script>
+  <script src="app.js?v=1.1"></script>
 
 </body>
 </html>

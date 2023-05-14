@@ -14,12 +14,13 @@ function getEntropy(length, numPossibleSymbols) {
   return Math.round(Math.log2(Math.pow(numPossibleSymbols, length)) * 100) / 100;
 }
 
-new Vue({
-  el: '#app',
-  data: {
-    numWords: 5,
-    delimiter: ' ',
-    passphrase: '',
+const app = Vue.createApp({
+  data() {
+    return {
+      numWords: 5,
+      delimiter: ' ',
+      passphrase: '',
+    };
   },
 
   mounted: function () {
@@ -54,3 +55,5 @@ new Vue({
     },
   },
 });
+
+app.mount('#app');
