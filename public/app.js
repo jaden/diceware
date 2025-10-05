@@ -1,13 +1,27 @@
-function getRandomNumber(ceiling) {
-  const maxUint = 0xFFFFFFFF; // 2^32 - 1
-  const maxSafeValue = maxUint - (maxUint % ceiling);
-  const buffer = new Uint32Array(1);
+function getRandomNumbers(ceiling, count) {
+  const maxValue = 65535; // 2^16 - 1
+  const maxSafeValue = maxValue - (maxValue % ceiling);
+  const buffer = new Uint16Array(count);
+  const results = new Array(count);
 
-  do {
+  let resultCount = 0;
+
+  // Only add values in the non-biased range (0 to maxSafeValue)
+  while (resultCount < count) {
     crypto.getRandomValues(buffer);
-  } while (buffer[0] > maxSafeValue); // Loop until it's in the safe, non-biased range
 
-  return buffer[0] % ceiling;
+    for (let i = 0; i < buffer.length; i++) {
+      if (buffer[i] < maxSafeValue) {
+        results[resultCount++] = buffer[i] % ceiling;
+
+        if (resultCount >= count) {
+          break;
+        }
+      }
+    }
+  }
+
+  return results;
 }
 
 function getEntropy(length, numPossibleSymbols) {
@@ -40,14 +54,15 @@ const app = Vue.createApp({
 
   methods: {
     generatePassphrase: function () {
-      let selectedWords = [];
-
       if (this.numWords <= 0 || this.numWords > maxNumWords) {
         this.numWords = defaultNumWords;
       }
 
+      const randomIndexes = getRandomNumbers(words.length, this.numWords);
+      let selectedWords = [];
+
       for (let i = 0; i < this.numWords; i++) {
-        selectedWords.push(words[getRandomNumber(words.length)]);
+        selectedWords.push(words[randomIndexes[i]]);
       }
 
       this.passphrase = selectedWords.join(this.delimiter);
