@@ -19,6 +19,18 @@
       top: 100vh;
     }
 
+    .notification {
+      opacity: 0;
+      animation: fadeInOut 5s linear forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
     .footer {
       padding: 2rem;
     }
@@ -68,12 +80,6 @@
         </div>
       </div>
 
-      <div class="is-clearfix"></div>
-
-      <div class="notification fade is-success is-light has-text-centered" v-bind:class="{ 'is-hidden': !isToastVisible }">
-        The passphrase has been copied to your clipboard.
-      </div>
-
       <div class="field">
         <div class="control">
           <a class="button is-large is-pulled-right is-light" id="clipboard-button" data-clipboard-target="#generated-passphrase" title="Copy to clipboard">
@@ -84,6 +90,11 @@
         <p class="has-text-grey is-size-7">
           {{ passphrase.length }} characters<span v-show="entropy && passphrase">, {{ entropy }} bits of entropy</span>
         </p>
+      </div>
+
+      <div class="notification fade is-success is-light has-text-centered" v-bind:class="{ 'is-hidden': !isToastVisible }"
+        style="position: fixed; top: 1rem; right: 1rem; max-width: 90vw;">
+        The passphrase has been copied to your clipboard.
       </div>
 
   </section>
