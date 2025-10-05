@@ -42,7 +42,7 @@
       <div class="field">
         <label class="label is-uppercase">Number of Words</label>
         <div class="control">
-          <input class="input" type="text" v-model="numWords" placeholder="The number of words in the passphrase">
+          <input class="input" type="number" v-model="numWords">
         </div>
       </div>
 
@@ -55,17 +55,26 @@
 
       <div class="field">
         <div class="control">
-          <button @click="generatePassphrase" class="button is-primary is-medium is-fullwidth">Generate</button>
+          <button @click="generatePassphrase" class="button is-link is-medium is-fullwidth">Generate</button>
         </div>
       </div>
 
       <div class="field">
         <div class="control">
-          <textarea v-model="passphrase" id="generated-passphrase" class="textarea is-large has-text-centered" rows="3" style="font-family: monospace" readonly></textarea>
+          <div id="generated-passphrase" class="has-text-centered is-family-monospace is-size-4 p-3"
+            style="overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap; border: 1px solid #dbdbdb; border-radius: 4px;">
+            {{ passphrase }}
+          </div>
         </div>
       </div>
 
-      <div class="field is-clearfix">
+      <div class="is-clearfix"></div>
+
+      <div class="notification fade is-success is-light has-text-centered" v-bind:class="{ 'is-hidden': !isToastVisible }">
+        The passphrase has been copied to your clipboard.
+      </div>
+
+      <div class="field">
         <div class="control">
           <a class="button is-large is-pulled-right is-light" id="clipboard-button" data-clipboard-target="#generated-passphrase" title="Copy to clipboard">
             <img src="assets/img/clippy.svg" height="36" width="36">
@@ -76,8 +85,6 @@
           {{ passphrase.length }} characters<span v-show="entropy && passphrase">, {{ entropy }} bits of entropy</span>
         </p>
       </div>
-
-    </div>
 
   </section>
 
@@ -94,7 +101,7 @@
   <script src="assets/js/vue-3.4.20.global.prod.js"></script>
   <script src="assets/js/clipboard-2.0.6.min.js"></script>
   <script src="wordlist.js?v=1"></script>
-  <script src="app.js?v=1.1"></script>
+  <script src="app.js?v=1.2"></script>
 
 </body>
 </html>

@@ -1,9 +1,13 @@
-const crypto = window.crypto || window.msCrypto;
-
-new ClipboardJS('#clipboard-button');
-
 function getRandomNumber(ceiling) {
-  return Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xffffffff + 1) * ceiling);
+  const maxUint = 0xFFFFFFFF; // 2^32 - 1
+  const maxSafeValue = maxUint - (maxUint % ceiling);
+  const buffer = new Uint32Array(1);
+
+  do {
+    crypto.getRandomValues(buffer);
+  } while (buffer[0] > maxSafeValue); // Loop until it's in the safe, non-biased range
+
+  return buffer[0] % ceiling;
 }
 
 function getEntropy(length, numPossibleSymbols) {
@@ -11,19 +15,26 @@ function getEntropy(length, numPossibleSymbols) {
     return null;
   }
 
-  return Math.round(Math.log2(Math.pow(numPossibleSymbols, length)) * 100) / 100;
+  return Math.round(length * Math.log2(numPossibleSymbols) * 100) / 100;
 }
+
+const defaultNumWords = 5;
+const maxNumWords = 50;
 
 const app = Vue.createApp({
   data() {
     return {
-      numWords: 5,
+      numWords: defaultNumWords,
       delimiter: ' ',
       passphrase: '',
+      clipboardButton: null,
+      isToastVisible: false,
     };
   },
 
   mounted: function () {
+    this.clipboardButton = new ClipboardJS('#clipboard-button');
+    this.clipboardButton.on('success', this.showToast);
     this.generatePassphrase();
   },
 
@@ -31,12 +42,25 @@ const app = Vue.createApp({
     generatePassphrase: function () {
       let selectedWords = [];
 
+      if (this.numWords <= 0 || this.numWords > maxNumWords) {
+        this.numWords = defaultNumWords;
+      }
+
       for (let i = 0; i < this.numWords; i++) {
         selectedWords.push(words[getRandomNumber(words.length)]);
       }
 
       this.passphrase = selectedWords.join(this.delimiter);
     },
+    showToast: function () {
+      this.isToastVisible = true;
+
+      setTimeout(this.hideToast, 5500);
+    },
+
+    hideToast: function () {
+      this.isToastVisible = false;
+    }
   },
 
   watch: {
