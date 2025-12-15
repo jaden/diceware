@@ -55,7 +55,7 @@ const app = Vue.createApp({
   methods: {
     generatePassphrase: function () {
       if (this.numWords <= 0 || this.numWords > maxNumWords) {
-        this.numWords = defaultNumWords;
+        return this.passphrase = '';
       }
 
       const randomIndexes = getRandomNumbers(words.length, this.numWords);
@@ -67,6 +67,7 @@ const app = Vue.createApp({
 
       this.passphrase = selectedWords.join(this.delimiter);
     },
+
     showToast: function () {
       this.isToastVisible = true;
 
